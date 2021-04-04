@@ -14,8 +14,6 @@ const server = new ApolloServer({
   context: authMiddleware
 });
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/budget";
-
 server.applyMiddleware({ app });
 
 app.use(express.urlencoded({ extended: false }));
@@ -30,12 +28,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/pizza-hunt', {
-  useFindAndModify: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
 });
 
 db.once('open', () => {
